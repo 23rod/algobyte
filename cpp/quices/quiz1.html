@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoByte | Quiz 1</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="../img/Logo.jpeg"/>
+</head>
+<body>
+    <nav>
+        <a href="../../index/index.html"><img class="logotype" src="img/Logo.jpeg" alt="Logo de AlgoByte"></a>
+        <ul>
+            <li class="inicio"><a href="../../index/index.html">INICIO</a></li>
+            <li class="cursos"><a href="../../curso/cursos.html">CURSOS</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Quiz 1: temas 1, 2 y 3.</h1>
+        <div id="timer">Tiempo restante: 05:00</div>
+        
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. En C++, una variable debe ser declarada antes de ser utilizada en el programa.</p>
+                <label><input type="radio" name="q1" value="true"> Verdadero</label><br>
+                <label><input type="radio" name="q1" value="false"> Falso</label>
+            </div>
+
+            <div class="question">
+                <p>2. ¿Cuál de los siguientes es un tipo de dato primitivo en C++?</p>
+                <select name="q2">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">std::string</option>
+                    <option value="B">int</option>
+                    <option value="C">vector</option>
+                    <option value="D">list</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>3. ¿Qué tipos de datos permiten almacenar valores de punto flotante en C++? (Selecciona todas las respuestas correctas)</p>
+                <label><input type="checkbox" name="q3" value="A"> float</label><br>
+                <label><input type="checkbox" name="q3" value="B"> int</label><br>
+                <label><input type="checkbox" name="q3" value="C"> double</label><br>
+                <label><input type="checkbox" name="q3" value="D"> char</label>
+            </div>
+
+            <div class="question">
+                <p>4. En C++, una constante puede cambiar su valor durante la ejecución del programa.</p>
+                <label><input type="radio" name="q4" value="true"> Verdadero</label><br>
+                <label><input type="radio" name="q4" value="false"> Falso</label>
+            </div>
+
+            <div class="question">
+                <p>5. ¿Cuál es el propósito de una declaración <code>const</code> en C++?</p>
+                <select name="q5">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Definir una variable que puede cambiar su valor</option>
+                    <option value="B">Definir una variable cuyo valor no puede ser modificado después de la inicialización</option>
+                    <option value="C">Definir una función que no devuelve un valor</option>
+                    <option value="D">Definir una estructura de datos dinámica</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>6. ¿Cuáles de los siguientes operadores son operadores de comparación en C++? (Selecciona todas las respuestas correctas)</p>
+                <label><input type="checkbox" name="q6" value="A"> ==</label><br>
+                <label><input type="checkbox" name="q6" value="B"> !=</label><br>
+                <label><input type="checkbox" name="q6" value="C"> &&</label><br>
+                <label><input type="checkbox" name="q6" value="D"> &lt;</label>
+            </div>
+
+            <div class="question">
+                <p>7. La sentencia <code>if</code> en C++ permite ejecutar bloques de código basados en una condición evaluada como verdadera o falsa.</p>
+                <label><input type="radio" name="q7" value="true"> Verdadero</label><br>
+                <label><input type="radio" name="q7" value="false"> Falso</label>
+            </div>
+
+            <button type="button" onclick="validateQuiz()">Enviar</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+    <div class="footers">
+        <a href="../../cpp/cpp.html" id="izq">Regresar</a>
+
+    </div>
+    <script>
+        const totalTime = 300; // Tiempo total en segundos (5 minutos)
+        let timeLeft = totalTime;
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').textContent = 'El tiempo ha expirado';
+                    document.getElementById('submit-btn').disabled = true;
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    document.getElementById('timer').textContent = `Tiempo restante: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        function validateQuiz() {
+            // Respuestas correctas
+            const correctAnswers = {
+                q1: 'true',
+                q2: 'B',
+                q3: ['A', 'C'],
+                q4: 'false',
+                q5: 'B',
+                q6: ['A', 'B', 'D'],
+                q7: 'true'
+            };
+
+            // Puntaje por pregunta
+            const pointsPerQuestion = 20 / 7;
+
+            // Obtener respuestas del formulario
+            const form = document.getElementById('quiz-form');
+            const formData = new FormData(form);
+
+            let score = 0;
+
+            // Validar respuestas de la pregunta 1
+            const answerQ1 = formData.get('q1');
+            if (answerQ1 === correctAnswers.q1) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 2
+            const answerQ2 = formData.get('q2');
+            if (answerQ2 === correctAnswers.q2) score += pointsPerQuestion;
+
+            // Validar respuestas de la pregunta 3
+            const answersQ3 = formData.getAll('q3');
+            const isQ3Correct = answersQ3.length === correctAnswers.q3.length &&
+                                answersQ3.every(value => correctAnswers.q3.includes(value));
+            if (isQ3Correct) score += pointsPerQuestion;
+
+            // Validar respuestas de la pregunta 4
+            const answerQ4 = formData.get('q4');
+            if (answerQ4 === correctAnswers.q4) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 5
+            const answerQ5 = formData.get('q5');
+            if (answerQ5 === correctAnswers.q5) score += pointsPerQuestion;
+
+            // Validar respuestas de la pregunta 6
+            const answersQ6 = formData.getAll('q6');
+            const isQ6Correct = answersQ6.length === correctAnswers.q6.length &&
+                                answersQ6.every(value => correctAnswers.q6.includes(value));
+            if (isQ6Correct) score += pointsPerQuestion;
+
+            // Validar respuestas de la pregunta 7
+            const answerQ7 = formData.get('q7');
+            if (answerQ7 === correctAnswers.q7) score += pointsPerQuestion;
+
+            // Mostrar el resultado
+            document.getElementById('result').innerHTML = `<p>Tu puntuación es ${score.toFixed(2)} de 20.</p>`;
+        }
+
+        // Iniciar el temporizador al cargar la página
+        window.onload = startTimer;
+    </script>
+</body>
+</html>

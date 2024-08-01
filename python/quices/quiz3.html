@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoByte | Quiz 3</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="../img/Logo.jpeg"/>
+</head>
+<body>
+    <nav>
+        <a href="../../index/index.html"><img class="logotype" src="img/Logo.jpeg" alt="Logo de AlgoByte"></a>
+        <ul>
+            <li class="inicio"><a href="../../index/index.html">INICIO</a></li>
+            <li class="cursos"><a href="../../curso/cursos.html">CURSOS</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Quiz 3: tema 7 y todos los temas.</h1>
+        <div id="timer">Tiempo restante: <span id="time">5:00</span></div>
+
+        <form id="quizForm">
+            <div class="question">
+                <p>1. ¿Cuál es la sintaxis correcta para crear una clase en Python?</p>
+                <label><input type="radio" name="q1" value="a"> class MiClase:</label><br>
+                <label><input type="radio" name="q1" value="b"> def MiClase:</label><br>
+                <label><input type="radio" name="q1" value="c"> create MiClase:</label>
+            </div>
+            <div class="question">
+                <p>2. Verdadero o Falso: En Python, se puede definir un método dentro de una clase utilizando la palabra clave 'function'.</p>
+                <label><input type="radio" name="q2" value="a"> Verdadero</label><br>
+                <label><input type="radio" name="q2" value="b"> Falso</label>
+            </div>
+            <div class="question">
+                <p>3. ¿Qué principio de POO se refiere a la capacidad de una clase para derivar propiedades y comportamientos de otra clase?</p>
+                <label><input type="radio" name="q3" value="a"> Polimorfismo</label><br>
+                <label><input type="radio" name="q3" value="b"> Encapsulación</label><br>
+                <label><input type="radio" name="q3" value="c"> Herencia</label>
+            </div>
+            <div class="question">
+                <p>4. ¿Cuál de los siguientes es un ciclo en Python?</p>
+                <label><input type="radio" name="q4" value="a"> loop</label><br>
+                <label><input type="radio" name="q4" value="b"> for</label><br>
+                <label><input type="radio" name="q4" value="c"> iterate</label>
+            </div>
+            <div class="question">
+                <p>5. Verdadero o Falso: Las funciones en Python se definen utilizando la palabra clave "function".</p>
+                <label><input type="radio" name="q5" value="a"> Verdadero</label><br>
+                <label><input type="radio" name="q5" value="b"> Falso</label>
+            </div>
+            <div class="question">
+                <p>6. ¿Cuál de los siguientes es un tipo de dato mutable en Python?</p>
+                <label><input type="radio" name="q6" value="a"> tuple</label><br>
+                <label><input type="radio" name="q6" value="b"> list</label><br>
+                <label><input type="radio" name="q6" value="c"> int</label>
+            </div>
+            <div class="question">
+                <p>7. Verdadero o Falso: Los diccionarios en Python permiten almacenar pares clave-valor.</p>
+                <label><input type="radio" name="q7" value="a"> Verdadero</label><br>
+                <label><input type="radio" name="q7" value="b"> Falso</label>
+            </div>
+            <button type="button" onclick="submitQuiz()">Enviar Quiz</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+        <div class="footers">
+        <a href="../../python/python.html" id="izq">Regresar</a>
+
+    <script>
+        const correctAnswers = {
+        q1: 'a',
+        q2: 'b',
+        q3: 'c',
+        q4: 'b',
+        q5: 'b',
+        q6: 'b',
+        q7: 'a'
+    };
+
+    let timeLeft = 300; // 5 minutos (300 segundos)
+    const timerElement = document.getElementById('time');
+
+    function submitQuiz() {
+        const form = document.getElementById('quizForm');
+        const formData = new FormData(form);
+        let score = 0;
+
+        for (const [question, answer] of formData.entries()) {
+            if (Array.isArray(correctAnswers[question])) {
+                const answers = formData.getAll(question);
+                if (JSON.stringify(answers.sort()) === JSON.stringify(correctAnswers[question].sort())) {
+                    score += (20 / Object.keys(correctAnswers).length);
+                }
+            } else {
+                if (answer === correctAnswers[question]) {
+                    score += (20 / Object.keys(correctAnswers).length);
+                }
+            }
+        }
+
+        document.getElementById('result').innerText = `Tu puntuación es: ${score.toFixed(2)} de 20`;
+    }
+
+    function updateTimer() {
+        if (timeLeft > 0) {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        } else {
+            alert("Tiempo agotado");
+            submitQuiz();
+        }
+    }
+
+    setInterval(updateTimer, 1000);
+
+    </script>
+</body>
+</html>

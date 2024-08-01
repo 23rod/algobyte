@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoByte | Quiz 3</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="../img/Logo.jpeg"/>
+</head>
+<body>
+    <nav>
+        <a href="../../index/index.html"><img class="logotype" src="img/Logo.jpeg" alt="Logo de AlgoByte"></a>
+        <ul>
+            <li class="inicio"><a href="../../index/index.html">INICIO</a></li>
+            <li class="cursos"><a href="../../curso/cursos.html">CURSOS</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Quiz 3: tema 7 y todos los temas.</h1>
+        <div id="timer">Tiempo restante: 05:00</div>
+
+        <form id="quiz-form">
+
+            <div class="question">
+                <p>1. En C++, el concepto de herencia permite que una clase derive características de otra clase.</p>
+                <label><input type="radio" name="q1" value="true"> Verdadero</label><br>
+                <label><input type="radio" name="q1" value="false"> Falso</label>
+            </div>
+
+            <div class="question">
+                <p>2. ¿Cuál de las siguientes es una característica de la encapsulación en C++?</p>
+                <select name="q2">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Ocultar los detalles internos de la implementación</option>
+                    <option value="B">Permitir la herencia múltiple</option>
+                    <option value="C">Implementar polimorfismo</option>
+                    <option value="D">Crear instancias de clases abstractas</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>3. ¿Qué es una clase abstracta en C++?</p>
+                <select name="q3">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Una clase que no puede ser instanciada y puede tener métodos virtuales puros</option>
+                    <option value="B">Una clase que no tiene métodos</option>
+                    <option value="C">Una clase que solo puede ser instanciada una vez</option>
+                    <option value="D">Una clase que solo tiene métodos estáticos</option>
+                </select>
+            </div>
+
+            <!-- Preguntas de Ciclos, Funciones y Estructuras de Datos -->
+            <div class="question">
+                <p>4. ¿Cuál es el propósito del bucle <code>for</code> en C++?</p>
+                <select name="q4">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Repetir un bloque de código un número determinado de veces</option>
+                    <option value="B">Repetir un bloque de código mientras se cumple una condición</option>
+                    <option value="C">Repetir un bloque de código hasta que una condición deje de ser verdadera</option>
+                    <option value="D">Definir una función</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>5. ¿Cómo se define una función en C++ que recibe dos parámetros enteros y devuelve su suma?</p>
+                <select name="q5">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">int suma(int a, int b) { return a + b; }</option>
+                    <option value="B">def suma(a, b): return a + b</option>
+                    <option value="C">function suma(a, b) { return a + b; }</option>
+                    <option value="D">suma(a, b) { return a + b; }</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>6. ¿Qué tipo de estructura de datos permite almacenar elementos de manera que se puede acceder a ellos por índice?</p>
+                <select name="q6">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Array</option>
+                    <option value="B">Lista enlazada</option>
+                    <option value="C">Pila</option>
+                    <option value="D">Cola</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>7. En C++, una función puede ser sobrecargada. Esto significa que:</p>
+                <select name="q7">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Una función puede tener el mismo nombre pero diferentes parámetros</option>
+                    <option value="B">Una función puede tener el mismo nombre pero diferente tipo de retorno</option>
+                    <option value="C">Una función puede ser definida en diferentes archivos</option>
+                    <option value="D">Una función puede ser llamada con diferentes nombres</option>
+                </select>
+            </div>
+
+            <button type="button" id="submit-btn" onclick="validateQuiz()">Enviar</button>
+        </form>
+
+        <div id="result"></div>
+    </div>
+
+        <div class="footers">
+        <a href="../../cpp/cpp.html" id="izq">Regresar</a>
+
+    <script>
+        const totalTime = 300; // Tiempo total en segundos (5 minutos)
+        let timeLeft = totalTime;
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').textContent = 'El tiempo ha expirado';
+                    document.getElementById('submit-btn').disabled = true;
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    document.getElementById('timer').textContent = `Tiempo restante: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        function validateQuiz() {
+            // Respuestas correctas
+            const correctAnswers = {
+                q1: 'true',
+                q2: 'A',
+                q3: 'A',
+                q4: 'A',
+                q5: 'A',
+                q6: 'A',
+                q7: 'A'
+            };
+
+            // Puntaje por pregunta
+            const pointsPerQuestion = 20 / 7;
+
+            // Obtener respuestas del formulario
+            const form = document.getElementById('quiz-form');
+            const formData = new FormData(form);
+
+            let score = 0;
+
+            // Validar respuestas de la pregunta 1
+            const answerQ1 = formData.get('q1');
+            if (answerQ1 === correctAnswers.q1) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 2
+            const answerQ2 = formData.get('q2');
+            if (answerQ2 === correctAnswers.q2) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 3
+            const answerQ3 = formData.get('q3');
+            if (answerQ3 === correctAnswers.q3) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 4
+            const answerQ4 = formData.get('q4');
+            if (answerQ4 === correctAnswers.q4) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 5
+            const answerQ5 = formData.get('q5');
+            if (answerQ5 === correctAnswers.q5) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 6
+            const answerQ6 = formData.get('q6');
+            if (answerQ6 === correctAnswers.q6) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 7
+            const answerQ7 = formData.get('q7');
+            if (answerQ7 === correctAnswers.q7) score += pointsPerQuestion;
+
+            // Mostrar el resultado
+            document.getElementById('result').innerHTML = `<p>Tu puntuación es ${score.toFixed(2)} de 20.</p>`;
+        }
+
+        // Iniciar el temporizador al cargar la página
+        window.onload = startTimer;
+    </script>
+</body>
+</html>

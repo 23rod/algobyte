@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoByte | Quiz 1</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="../img/Logo.jpeg"/>
+</head>
+<body>
+    <nav>
+        <a href="../../index/index.html"><img class="logotype" src="img/Logo.jpeg" alt="Logo de AlgoByte"></a>
+        <ul>
+            <li class="inicio"><a href="../../index/index.html">INICIO</a></li>
+            <li class="cursos"><a href="../../curso/cursos.html">CURSOS</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Quiz 1: temas 1, 2 y 3.</h1>
+        <div id="timer">Tiempo restante: <span id="time">3:00</span></div>
+
+        <form id="quizForm">
+            <div class="question">
+                <p>1. ¿Cuál de las siguientes opciones es una variable válida en Python?</p>
+                <label><input type="radio" name="q1" value="a"> 1variable</label><br>
+                <label><input type="radio" name="q1" value="b"> variable_1</label><br>
+                <label><input type="radio" name="q1" value="c"> variable-1</label>
+            </div>
+            <div class="question">
+                <p>2. Verdadero o Falso: En Python, los tipos de datos son estáticamente tipados.</p>
+                <label><input type="radio" name="q2" value="a"> Verdadero</label><br>
+                <label><input type="radio" name="q2" value="b"> Falso</label>
+            </div>
+            <div class="question">
+                <p>3. ¿Cuál de los siguientes es un tipo de datos mutable en Python?</p>
+                <label><input type="radio" name="q3" value="a"> tuple</label><br>
+                <label><input type="radio" name="q3" value="b"> list</label><br>
+                <label><input type="radio" name="q3" value="c"> str</label>
+            </div>
+            <div class="question">
+                <p>4. ¿Cuál es el resultado de la expresión 3 > 2?</p>
+                <label><input type="radio" name="q4" value="a"> False</label><br>
+                <label><input type="radio" name="q4" value="b"> True</label>
+            </div>
+            <div class="question">
+                <p>5. ¿Cuál de los siguientes operadores se utiliza para verificar la igualdad en Python?</p>
+                <label><input type="checkbox" name="q5" value="a"> =</label><br>
+                <label><input type="checkbox" name="q5" value="b"> ==</label><br>
+                <label><input type="checkbox" name="q5" value="c"> ===</label>
+            </div>
+            <div class="question">
+                <p>6. ¿Cuál de las siguientes sentencias es correcta para una estructura condicional en Python?</p>
+                <label><input type="radio" name="q6" value="a"> if x = 5:</label><br>
+                <label><input type="radio" name="q6" value="b"> if x == 5:</label><br>
+                <label><input type="radio" name="q6" value="c"> if (x == 5)</label>
+            </div>
+            <div class="question">
+                <p>7. Verdadero o Falso: Las constantes en Python se definen usando la palabra clave "const".</p>
+                <label><input type="radio" name="q7" value="a"> Verdadero</label><br>
+                <label><input type="radio" name="q7" value="b"> Falso</label>
+            </div>
+            <button type="button" onclick="submitQuiz()">Enviar Quiz</button>
+        </form>
+        <div id="result"></div>
+        
+    </div>
+    <div class="footers">
+        <a href="../../python/python.html" id="izq">Regresar</a>
+
+    </div>
+    <script>
+        const correctAnswers = {
+        q1: 'b',
+        q2: 'b',
+        q3: 'b',
+        q4: 'b',
+        q5: 'b',
+        q6: 'b',
+        q7: 'b'
+    };
+
+    let timeLeft = 180; // 3 minutos (180 segundos)
+    const timerElement = document.getElementById('time');
+
+    function submitQuiz() {
+        const form = document.getElementById('quizForm');
+        const formData = new FormData(form);
+        let score = 0;
+
+        for (const [question, answer] of formData.entries()) {
+            if (answer === correctAnswers[question]) {
+                score += (20 / Object.keys(correctAnswers).length);
+            }
+        }
+
+        document.getElementById('result').innerText = `Tu puntuación es: ${score.toFixed(2)} de 20`;
+    }
+
+    function updateTimer() {
+        if (timeLeft > 0) {
+            timeLeft--;
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        } else {
+            alert("Tiempo agotado");
+            submitQuiz();
+        }
+    }
+
+    setInterval(updateTimer, 1000);
+
+    </script>
+</body>
+</html>

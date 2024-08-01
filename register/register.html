@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoByte | Register</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="img/logo.jpeg" type="img/logo.jpeg">
+</head>
+<body>
+    <a href="../index/index.html"><img src="img/logo.jpeg" alt="logo" class = "imagen" id="miimagen"></a>
+    
+    <form action method="post" id="form">
+        <div class = "formulario">
+            <h1>Registro de Cuenta</h1>
+            <div class = "username"> 
+                <input type="text" id="name">
+                <label>nombre de usuario</label>
+            </div>
+            <div class = "username" >
+                <input type="password" id="password">
+                <label>contraseña</label>
+            </div>
+            <div class = "username"> 
+                <input type="email" id="email">
+                <label>correo</label>
+            </div>
+
+            <div class="iniciarsesion"> <a href="../login/login.html">¿Ya tienes una cuenta? </a></div>
+
+            <p class="warnings" id="warnings"></p>
+            <button type="submit"><a href="../login/login.html">Registrarse</a></button></a>
+
+            <div class = "regresarse">
+                <a href="../index/index.html">Regresar a Inicio</a>
+            </div>
+        </div>
+    </form>
+
+    <script src="app.js"></script>
+</body>
+</html>

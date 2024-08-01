@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlgoByte | Quiz 2</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="../img/Logo.jpeg"/>
+</head>
+<body>
+    <nav>
+        <a href="../../index/index.html"><img class="logotype" src="img/Logo.jpeg" alt="Logo de AlgoByte"></a>
+        <ul>
+            <li class="inicio"><a href="../../index/index.html">INICIO</a></li>
+            <li class="cursos"><a href="../../curso/cursos.html">CURSOS</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Quiz 2: temas 4, 5 y 6.</h1>
+        <div id="timer">Tiempo restante: 05:00</div>
+
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. En C++, un bucle <code>for</code> siempre requiere una condición de término.</p>
+                <label><input type="radio" name="q1" value="true"> Verdadero</label><br>
+                <label><input type="radio" name="q1" value="false"> Falso</label>
+            </div>
+
+            <div class="question">
+                <p>2. ¿Cuál es la función principal de un bucle <code>while</code> en C++?</p>
+                <select name="q2">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Ejecutar un bloque de código mientras una condición sea verdadera</option>
+                    <option value="B">Ejecutar un bloque de código una sola vez</option>
+                    <option value="C">Ejecutar un bloque de código de forma indefinida</option>
+                    <option value="D">Definir una función</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>3. ¿Qué tipo de bucle se utiliza cuando se conoce el número exacto de iteraciones?</p>
+                <select name="q3">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">for</option>
+                    <option value="B">while</option>
+                    <option value="C">do-while</option>
+                    <option value="D">goto</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>4. En C++, una función puede devolver un valor o ser de tipo <code>void</code> si no devuelve nada.</p>
+                <label><input type="radio" name="q4" value="true"> Verdadero</label><br>
+                <label><input type="radio" name="q4" value="false"> Falso</label>
+            </div>
+
+            <div class="question">
+                <p>5. ¿Cuál de las siguientes es una característica de las funciones en C++?</p>
+                <select name="q5">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Pueden ser anónimas</option>
+                    <option value="B">Pueden tener múltiples parámetros y un tipo de retorno</option>
+                    <option value="C">Pueden no tener un tipo de retorno</option>
+                    <option value="D">Pueden ser definidas dentro de otras funciones</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>6. ¿Qué tipo de estructura de datos permite almacenar elementos de manera que se puede acceder a ellos por índice?</p>
+                <select name="q6">
+                    <option value="">Selecciona una opción</option>
+                    <option value="A">Array</option>
+                    <option value="B">Lista enlazada</option>
+                    <option value="C">Pila</option>
+                    <option value="D">Cola</option>
+                </select>
+            </div>
+
+            <div class="question">
+                <p>7. ¿Cómo se accede a un elemento específico en un array en C++?</p>
+                <label><input type="radio" name="q7" value="A"> Utilizando su índice</label><br>
+                <label><input type="radio" name="q7" value="B"> Utilizando su valor</label><br>
+                <label><input type="radio" name="q7" value="C"> Utilizando una clave</label><br>
+                <label><input type="radio" name="q7" value="D"> Utilizando un puntero</label>
+            </div>
+
+            <button type="button" id="submit-btn" onclick="validateQuiz()">Enviar</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <div class="footers">
+    <a href="../../cpp/cpp.html" id="izq">Regresar</a>
+
+    </div>
+
+    <script>
+        const totalTime = 300; // Tiempo total en segundos (5 minutos)
+        let timeLeft = totalTime;
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    document.getElementById('timer').textContent = 'El tiempo ha expirado';
+                    document.getElementById('submit-btn').disabled = true;
+                } else {
+                    const minutes = Math.floor(timeLeft / 60);
+                    const seconds = timeLeft % 60;
+                    document.getElementById('timer').textContent = `Tiempo restante: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        function validateQuiz() {
+            // Respuestas correctas
+            const correctAnswers = {
+                q1: 'true',
+                q2: 'A',
+                q3: 'A',
+                q4: 'true',
+                q5: 'B',
+                q6: 'A',
+                q7: 'A'
+            };
+
+            // Puntaje por pregunta
+            const pointsPerQuestion = 20 / 7;
+
+            // Obtener respuestas del formulario
+            const form = document.getElementById('quiz-form');
+            const formData = new FormData(form);
+
+            let score = 0;
+
+            // Validar respuestas de la pregunta 1
+            const answerQ1 = formData.get('q1');
+            if (answerQ1 === correctAnswers.q1) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 2
+            const answerQ2 = formData.get('q2');
+            if (answerQ2 === correctAnswers.q2) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 3
+            const answerQ3 = formData.get('q3');
+            if (answerQ3 === correctAnswers.q3) score += pointsPerQuestion;
+
+            // Validar respuestas de la pregunta 4
+            const answerQ4 = formData.get('q4');
+            if (answerQ4 === correctAnswers.q4) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 5
+            const answerQ5 = formData.get('q5');
+            if (answerQ5 === correctAnswers.q5) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 6
+            const answerQ6 = formData.get('q6');
+            if (answerQ6 === correctAnswers.q6) score += pointsPerQuestion;
+
+            // Validar respuesta de la pregunta 7
+            const answerQ7 = formData.get('q7');
+            if (answerQ7 === correctAnswers.q7) score += pointsPerQuestion;
+
+            // Mostrar el resultado
+            document.getElementById('result').innerHTML = `<p>Tu puntuación es ${score.toFixed(2)} de 20.</p>`;
+        }
+
+        // Iniciar el temporizador al cargar la página
+        window.onload = startTimer;
+    </script>
+</body>
+</html>
